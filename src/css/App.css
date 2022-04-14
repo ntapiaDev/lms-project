@@ -1,5 +1,26 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap');
+
 *, ::after, ::before {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+
+body {
+  height: 100vh;
+  background: linear-gradient(rgb(183, 232, 245), rgb(163, 184, 245));
+  font-family: 'Poppins', sans-serif;
+}
+
+nav {
+  background-color: rgb(111, 141, 220);
+}
+nav a {
+  color: #FFF;
+  text-decoration: none;
+}
+nav a:visited {
+  color: #FFF;
 }
