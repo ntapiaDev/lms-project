@@ -1,13 +1,15 @@
 import { render } from "@testing-library/react";
 import React from "react";
+import {
+    Link
+} from "react-router-dom";
 
 class CoursRow extends React.Component {
     render() {
         const cours = this.props.cours;
         const coursLink = `./${cours.slug}`;
         return(
-
-            <a href={coursLink}>
+            <Link to={coursLink}>Liste des cours
                 <div className="cours-item">
                     <h3>{cours.title.rendered}</h3>
                     <p>Auteur : {cours.author}</p>
@@ -16,7 +18,7 @@ class CoursRow extends React.Component {
                     
                     <br/>
                 </div>
-            </a>
+            </Link>
 
         );
     }
