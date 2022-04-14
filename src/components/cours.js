@@ -7,7 +7,7 @@ import {
 class CoursRow extends React.Component {
     render() {
         const cours = this.props.cours;
-        const coursLink = `./${cours.slug}`;
+        const coursLink = `../${cours.slug}`;
         return(
             <Link to={coursLink}>Liste des cours
                 <div className="cours-item">
