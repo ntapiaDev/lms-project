@@ -7,11 +7,12 @@ import Cours from "./cours";
 
 function Accueil() {
 
-        return 
+        return (
             <div>
                 <h1>Bienvenue sur LMS Projet</h1> 
                 <Cours />
-            </div>;
+            </div>
+        );
 }
 
 
