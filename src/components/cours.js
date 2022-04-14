@@ -4,8 +4,10 @@ import React from "react";
 class CoursRow extends React.Component {
     render() {
         const cours = this.props.cours;
+        const coursLink = `./${cours.slug}`;
         return(
-            <a href={cours.link}>
+
+            <a href={coursLink}>
                 <div className="cours-item">
                     <h3>{cours.title.rendered}</h3>
                     <p>Auteur : {cours.author}</p>

@@ -10,12 +10,16 @@ import Cours from "./components/cours";
 import Connexion from "./components/connexion";
 import Inscription from "./components/inscription";
 import Views from "./Views";
+import logo from './assets/images/logo-lms.png'; 
 
 export default function App() {
   return (
     <Router>
       <React.Fragment>
         <header>
+          <div>
+            <img src={logo} alt="Logo de l'application" />
+          </div>
           <nav>
             <ul>
               <li>
@@ -40,3 +44,5 @@ export default function App() {
     </Router>
   );
 }
+
+
