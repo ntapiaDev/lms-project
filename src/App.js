@@ -34,6 +34,9 @@ export default function App() {
         <main>
           <Views/>
         </main>
+        <footer>
+          
+        </footer>
       </React.Fragment>
     </Router>
   );
