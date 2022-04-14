@@ -9,7 +9,7 @@ class CoursRow extends React.Component {
         const cours = this.props.cours;
         const coursLink = `../${cours.slug}`;
         return(
-            <Link to={coursLink}>Liste des cours
+            <Link to={coursLink}>
                 <div className="cours-item">
                     <h3>{cours.title.rendered}</h3>
                     <p>Auteur : {cours.author}</p>
