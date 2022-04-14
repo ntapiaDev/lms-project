@@ -1,11 +1,7 @@
 import React from "react";
 import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link
+    Link
 } from "react-router-dom";
-import Inscription from "../components/inscription";
 import './connexion.css';
 
 export default class Connexion extends React.Component {
@@ -28,7 +24,7 @@ export default class Connexion extends React.Component {
     }
     handleSubmit(e) {
         console.log("Login = " + this.state.loginValue + " - Mot de passe = " + this.state.passwordValue);
-        e.preventDefault();    
+        e.preventDefault(); 
     }
 
     render() {
@@ -41,9 +37,6 @@ export default class Connexion extends React.Component {
             <div className="inscription">
                 <div>
                     <Link to="/inscription">Créer un compte</Link>
-                    <Routes>
-                        <Route path='/inscription' element={<Inscription />} />
-                    </Routes>
                 </div>
             </div>
         </section>

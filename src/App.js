@@ -9,6 +9,7 @@ import Accueil from "./components/accueil";
 import Cours from "./components/cours";
 import Connexion from "./components/connexion";
 import Inscription from "./components/inscription";
+import Views from "./Views";
 
 export default function App() {
   return (
@@ -33,12 +34,7 @@ export default function App() {
           </nav>
         </header>
         <main>
-          <Routes>
-            <Route path='/' element={<Accueil />} />
-            <Route path='/cours' element={<Cours />} />
-            <Route path='/inscription' element={<Inscription />} />
-            <Route path='/connexion' element={<Connexion />} />
-          </Routes>
+          <Views/>
         </main>
       </React.Fragment>
     </Router>
