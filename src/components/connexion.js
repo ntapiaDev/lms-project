@@ -23,7 +23,7 @@ export default class Connexion extends React.Component {
     }
     handleSubmit(e) {
         console.log("Login = " + this.state.loginValue + " - Mot de passe = " + this.state.passwordValue);
-        e.preventDefault(); 
+        e.preventDefault();
     }
 
     render() {
