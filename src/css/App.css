@@ -6,13 +6,13 @@
   box-sizing: border-box;
 }
 
-
-body {
+#root {
   min-height: 100vh;
   background: linear-gradient(rgb(183, 232, 245), rgb(163, 184, 245));
   font-family: 'Poppins', sans-serif;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
 header {
@@ -66,7 +66,6 @@ h2{
 }
 
 footer{
-  margin-top: auto;
   height: 80px;
   background-color: rgb(111, 141, 220) ;
 }
