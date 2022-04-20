@@ -1,41 +1,23 @@
-import React from "react";
+
+import React from "react"
 import {
   BrowserRouter as Router,
   Link
 } from "react-router-dom";
 import Views from "./Views";
-import logo from './assets/images/logo-lms.png'; 
+import Header from "./components/header";
 
 export default function App() {
+  
   return (
     <Router>
       <React.Fragment>
-        <header>
-          <div>
-            <img src={logo} alt="Logo de l'application" />
-          </div>
-          <nav>
-            <ul>
-              <li>
-                <Link to="/">Accueil</Link>
-              </li>
-              <li>
-                <Link to="/cours">Liste des cours</Link>
-              </li>
-              <li>
-                <Link to="/inscription">S'inscrire</Link>
-              </li>
-              <li>
-                <Link to="/connexion">Se connecter</Link>
-              </li>
-            </ul>
-          </nav>
-        </header>
+        <Header />
         <main>
           <Views/>
         </main>
         <footer>
-          
+          <p>Nicolas | Damirdine | Christopher</p>
         </footer>
       </React.Fragment>
     </Router>

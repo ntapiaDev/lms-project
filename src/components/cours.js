@@ -11,10 +11,12 @@ class CoursRow extends React.Component {
         return(
             <Link to={coursLink}>
                 <div className="cours-item">
-                    <h3>{cours.title.rendered}</h3>
-                    <p>Auteur : {cours.author}</p>
-                    
-                    <p>date : {cours.date}</p>
+                    <img src={cours.image.replace("lms.local", "lms-project")} alt={cours.name} />
+                    <h3>{cours.name}</h3>
+                    <p>Auteur : {cours.instructor.name}</p>
+                    <div>
+                        <p>⏱ {cours.duration}</p>
+                    </div>
                     
                     <br/>
                 </div>
@@ -65,7 +67,7 @@ class Cours extends React.Component {
     }
 
     componentDidMount() {
-        fetch('https://www.leroyalmonceau.com/wp-json/wp/v2/posts')
+        fetch('http://lms-project/wp-json/learnpress/v1/courses')
             .then(response => response.json())
             .then(data => this.setState({ coursListe: data, isLoaded : true }));
         
@@ -79,7 +81,7 @@ class Cours extends React.Component {
         }
         else if (isLoaded){
             return (
-                <div>
+                <div className="cours-container">
                     <h2>Cours disponibles</h2> 
                     <CoursTable coursListe={coursListe}/>
                 </div>
