@@ -12,7 +12,7 @@ export default class AfficherCours extends React.Component {
     }
     
     componentDidMount() {
-        fetch('https://www.leroyalmonceau.com/wp-json/wp/v2/posts')
+        fetch('http://lms-project/wp-json/learnpress/v1/courses')
             .then(response => response.json())
             .then(data => this.setState({ coursListe: data, isLoaded : true }));
         
@@ -24,16 +24,21 @@ export default class AfficherCours extends React.Component {
             return <div>Chargement…</div>;
         }
         else if (isLoaded){
+            let titlecours
             let cours
             let slug = window.location.pathname.slice(1)
+            console.log(coursListe);
             for (let i = 0; i < coursListe.length; i++) {
                 if (coursListe[i].slug === slug) {
-                    cours = coursListe[i].content.rendered
+                    titlecours = coursListe[i].name
+                    cours = coursListe[i].content
                     console.log(cours);
                 }
             }
             return (
+                
                 <div>
+                    <h1>{ parse(titlecours) }</h1>
                     { parse(cours) }
                 </div>
             );
