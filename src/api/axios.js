@@ -1,5 +1,5 @@
 import axios from "axios";
 
 export default axios.create({
-    baseURL: 'http://ffpa/?rest_route=/simple-jwt-login/v1/'
+    baseURL: 'http://projet-lms-afpa.000webhostapp.com/?rest_route=/simple-jwt-login/v1/'
 });

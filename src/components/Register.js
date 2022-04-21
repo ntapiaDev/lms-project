@@ -91,13 +91,7 @@ const Register = () => {
         
         try {
             console.log(role);
-            const response = await axios.post(
-                `users&user_login=${user}&password=${pwd}&email=${email}&AUTH_KEY=${role === 'Élève' ? AUTH_KEY_SUB : AUTH_KEY_EDI }`,
-                {
-                    headers: { 'Content-Type':'application/json' },
-                    withCredentials: true
-                }
-            );
+            const response = await axios.post(`users&user_login=${user}&password=${pwd}&email=${email}&AUTH_KEY=${role === 'Élève' ? AUTH_KEY_SUB : AUTH_KEY_EDI }`);
             console.log(response.data);
             navigate("../connexion", { replace: true })
         } catch (err) {

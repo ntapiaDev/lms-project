@@ -27,13 +27,7 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post(
-                `auth&username=${user}&password=${pwd}`,
-                {
-                    headers: { 'Content-Type':'application/json' },
-                    withCredentials: true
-                }
-            );
+            const response = await axios.post(`auth&username=${user}&password=${pwd}`);
             console.log(response?.data);
             const accessToken = response?.data?.data.jwt;
             console.log(accessToken);
