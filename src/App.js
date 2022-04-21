@@ -6,7 +6,8 @@ import Accueil from "./components/accueil";
 import Cours from "./components/cours";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import AfficherCours from "./components/affichercours.js";
+import AfficherCours from "./components/affichercours";
+import RequireAuth from "./components/RequireAuth"
 
 export default function App() {
   
@@ -16,7 +17,9 @@ export default function App() {
       <main>
       <Routes>
           <Route path='/' element={<Accueil />} />
-          <Route path='/cours' element={<Cours />} />
+          <Route element={<RequireAuth />}>
+            <Route path='/cours' element={<Cours />} />
+          </Route>
           <Route path='/inscription' element={<Register />} />
           <Route path='/connexion' element={<Login />} />
           <Route path='/:slug' element={<AfficherCours />} />

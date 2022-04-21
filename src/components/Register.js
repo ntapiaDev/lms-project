@@ -8,7 +8,8 @@ const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const EMAIL_REGEX = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
-const AUTH_KEY= 'lFP18oU3XNQh8t1rLmlVMjrt7QJTI73k';
+const AUTH_KEY_SUB = 'lFP18oU3XNQh8t1rLmlVMjrt7QJTI73k';
+const AUTH_KEY_EDI = 'DYfjnodinWbVaN9BLsl5YZsO1s9MPpiS';
 
 const Register = () => {
     const userRef = useRef();
@@ -32,6 +33,8 @@ const Register = () => {
     const [emailFocus, setEmailFocus] = useState(false);
 
     const [errMsg, setErrMsg] = useState('');
+
+    const [role, setRole] = useState('');
 
     useEffect(() => {
         userRef.current.focus();
@@ -58,6 +61,23 @@ const Register = () => {
         setErrMsg('');
     }, [user, pwd, matchPwd])
 
+    // Élève ou prof
+    const eleveRef = useRef();
+    const profRef = useRef();
+    const handleCheckbox = (ref) => {
+        if (ref === 'Élève') {
+            profRef.current.checked = false;
+        } else {
+            eleveRef.current.checked = false;
+        }
+
+        if (eleveRef.current.checked || profRef.current.checked ) {
+            setRole(ref);
+        } else {
+            setRole('');
+        }        
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         // if button enabled with JS hack
@@ -70,8 +90,9 @@ const Register = () => {
         }
         
         try {
+            console.log(role);
             const response = await axios.post(
-                `users&user_login=${user}&password=${pwd}&email=${email}&AUTH_KEY=${AUTH_KEY}`,
+                `users&user_login=${user}&password=${pwd}&email=${email}&AUTH_KEY=${role === 'Élève' ? AUTH_KEY_SUB : AUTH_KEY_EDI }`,
                 {
                     headers: { 'Content-Type':'application/json' },
                     withCredentials: true
@@ -93,7 +114,7 @@ const Register = () => {
     }
 
     return(
-        <section>
+        <section className="register">
             <p ref={errRef} className={errMsg? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
             <h1>Inscription</h1>
             <form onSubmit={handleSubmit}>
@@ -191,7 +212,25 @@ const Register = () => {
                     Lettre, nombre, underscore et trait d'union autorités.
                 </p>
 
-                <button className="form-btn" disabled={!validName || !validPwd || !validMatch || !validEmail ? true : false}>S'enregistrer</button>
+                <div className="checkbox">
+                    <input 
+                        type="checkbox"
+                        id="eleve"
+                        ref={eleveRef}
+                        onChange={() => handleCheckbox('Élève')}
+                    />
+                    <label htmlFor="eleve">Élève</label>
+
+                    <input 
+                        type="checkbox"
+                        id="prof"
+                        ref={profRef}
+                        onChange={() => handleCheckbox('Professeur')}
+                    />
+                    <label htmlFor="prof">Professeur</label>
+                </div>
+
+                <button className="form-btn" disabled={!validName || !validPwd || !validMatch || !validEmail || role === '' ? true : false}>S'enregistrer</button>
 
                 <p>
                     Déjà enregistré ?<br />
