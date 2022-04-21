@@ -19,10 +19,10 @@ export default function App() {
           <Route path='/' element={<Accueil />} />
           <Route element={<RequireAuth />}>
             <Route path='/cours' element={<Cours />} />
+            <Route path='/:slug' element={<AfficherCours />} />
           </Route>
           <Route path='/inscription' element={<Register />} />
           <Route path='/connexion' element={<Login />} />
-          <Route path='/:slug' element={<AfficherCours />} />
       </Routes>
       </main>
       <footer>
