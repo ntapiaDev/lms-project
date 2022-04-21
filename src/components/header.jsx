@@ -21,7 +21,7 @@ export default function Header() {
 
     return (
         <header>
-        <div class="logo-div">
+        <div className="logo-div">
           <Link to="/"><img src={logo} alt="Logo de l'application" /></Link>
           
           <button id="nav-mobile-button" onClick={handleToggle}>
@@ -49,16 +49,16 @@ export default function Header() {
 
           <ul className={`menuNav ${navbarOpen ? " showMenu" : ""}`}>
             <li>
-              <Link to="/" activeClassName="active-link" onClick={() => closeMenu()} exact>Accueil</Link>
+              <Link to="/"  onClick={() => closeMenu()} >Accueil</Link>
             </li>
             <li>
-              <Link to="/cours" activeClassName="active-link" onClick={() => closeMenu()} exact>Liste des cours</Link>
+              <Link to="/cours"  onClick={() => closeMenu()} >Liste des cours</Link>
             </li>
             <li>
-              <Link to="/inscription" activeClassName="active-link" onClick={() => closeMenu()} exact>S'inscrire</Link>
+              <Link to="/inscription"  onClick={() => closeMenu()} >S'inscrire</Link>
             </li>
             <li>
-              <Link to="/connexion" activeClassName="active-link" onClick={() => closeMenu()} exact>Se connecter</Link>
+              <Link to="/connexion"  onClick={() => closeMenu()} >Se connecter</Link>
             </li>
           </ul>
         </nav>

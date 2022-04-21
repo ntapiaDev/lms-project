@@ -1,5 +1,6 @@
-import { render } from "@testing-library/react";
+
 import React from "react";
+import parse from 'html-react-parser';
 import {
     Link
 } from "react-router-dom";
@@ -11,14 +12,17 @@ class CoursRow extends React.Component {
         return(
             <Link to={coursLink}>
                 <div className="cours-item">
-                    <img src={cours.image.replace("lms.local", "lms-project")} alt={cours.name} />
-                    <h3>{cours.name}</h3>
-                    <p>Auteur : {cours.instructor.name}</p>
-                    <div>
-                        <p>⏱ {cours.duration}</p>
+                    <div className="cours-image">
+                        <img src={cours.acf.course_image} />
                     </div>
-                    
-                    <br/>
+                    <div className="cours-description">
+                        <h3>{parse(cours.title.rendered)}</h3>
+                        {parse(cours.excerpt.rendered)}
+                        <div className="cours-footer">
+                            <p>Par <span className="cours-instructor">{cours.acf.instructor}</span></p>
+                            <p>⏱ {cours.acf.course_duration}h</p>
+                        </div>
+                    </div>
                 </div>
             </Link>
 
@@ -67,7 +71,7 @@ class Cours extends React.Component {
     }
 
     componentDidMount() {
-        fetch('http://lms-project/wp-json/learnpress/v1/courses')
+        fetch('https://projet-lms-afpa.000webhostapp.com/wp-json/wp/v2/cours')
             .then(response => response.json())
             .then(data => this.setState({ coursListe: data, isLoaded : true }));
         

@@ -12,7 +12,7 @@ export default class AfficherCours extends React.Component {
     }
     
     componentDidMount() {
-        fetch('http://lms-project/wp-json/learnpress/v1/courses')
+        fetch('https://projet-lms-afpa.000webhostapp.com/wp-json/wp/v2/cours/')
             .then(response => response.json())
             .then(data => this.setState({ coursListe: data, isLoaded : true }));
         
@@ -27,12 +27,10 @@ export default class AfficherCours extends React.Component {
             let titlecours
             let cours
             let slug = window.location.pathname.slice(1)
-            console.log(coursListe);
             for (let i = 0; i < coursListe.length; i++) {
                 if (coursListe[i].slug === slug) {
-                    titlecours = coursListe[i].name
-                    cours = coursListe[i].content
-                    console.log(cours);
+                    titlecours = coursListe[i].title.rendered
+                    cours = coursListe[i].content.rendered
                 }
             }
             return (

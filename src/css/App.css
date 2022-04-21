@@ -59,19 +59,29 @@ h2{
 
 .cours-item{
   background-color: white;
-  margin: 30px 10px;
+  margin: 20px 10px;
   padding: 20px;
   border-radius: 5px;
+  display: flex;
+  flex-direction: column;
 }
 
-.cours-item img{
+
+.cours-image{
   width: 100%;
   height: 150px;
-  object-fit: cover;
+  margin-bottom: 20px;
 }
 
+.cours-image img{
+  object-fit: contain;
+  height: 100%;
+  width: 100%;
+  margin: auto;
+}
 footer{
-  height: 80px;
+  margin-top: 50px;
+  height: 50px;
   background-color: rgb(111, 141, 220) ;
   display: flex;
 }
@@ -111,38 +121,68 @@ footer p{
   display: block;
 }
 .logo-div{
-  padding: 10px;
+  padding: 10px 20px;
   display: flex;
   justify-content: space-between;
 }
 
-@media screen and (min-width : 768px) {
+.cours-footer{
+  display: flex;
+  flex-wrap: wrap;
+  align-self: flex-end;
+  margin-top: auto;
+  justify-content: flex-end;
+}
 
-  .cours-item img{
-    width: 100%;
-    height: 200px;
+.cours-footer p{
+  margin-left: 10px;
+}
+
+
+@media screen and (min-width : 768px) {
+  .cours-list{
+    display:flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+  }
+  .cours-item{
+    flex-direction: row;
+  }
+
+  .cours-image{
+    width: 150px;
+    height: 150px;
+    margin-right: 20px;
   }
   .cours-container{
-    padding: 0 15%;
+    padding: 0 5%;
+  }
+  .cours-description{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 75%;
+  }
+  .cours-description h3{
+    font-size: 1.5em;
   }
 }
 
 
 @media screen and (min-width : 992px) {
-  .cours-list{
-    display:flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
 
+
+  .cours-container{
+    padding: 0 15%;
+  }
   .cours-list a{
-    width: 30%;
     min-width:350px;
     margin-bottom: 20px;
   }
 
-  .cours-item{
-    height: 100%;
+  .cours-image{
+    width: 200px;
+    height: 200px;
   }
   header{
     padding: 0 15%;
