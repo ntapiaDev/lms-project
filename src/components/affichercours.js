@@ -21,7 +21,9 @@ export default class AfficherCours extends React.Component {
     render() {
         const {isLoaded, coursListe} = this.state;
         if(!isLoaded){
-            return <div>Chargement…</div>;
+            return  <div class="loading">
+                        <p>Chargement…</p>
+                    </div>;
         }
         else if (isLoaded){
             let titlecours
@@ -35,7 +37,7 @@ export default class AfficherCours extends React.Component {
             }
             return (
                 
-                <div>
+                <div class="cours-content">
                     <h1>{ parse(titlecours) }</h1>
                     { parse(cours) }
                 </div>

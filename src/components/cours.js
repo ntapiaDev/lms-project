@@ -81,7 +81,9 @@ class Cours extends React.Component {
     render() {
         const {isLoaded, coursListe} = this.state;
         if(!isLoaded){
-            return <div>Chargement…</div>;
+            return  <div class="loading">
+                        <p>Chargement…</p>
+                    </div>;
         }
         else if (isLoaded){
             return (
