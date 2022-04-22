@@ -1,11 +1,11 @@
-
 import React from "react"
 import Header from "./components/header";
 import { Routes, Route } from "react-router-dom";
 import Accueil from "./components/accueil";
 import Cours from "./components/cours";
-import Login from "./components/Login";
 import Register from "./components/Register";
+import Login from "./components/Login";
+import Logout from "./components/Logout";
 import AfficherCours from "./components/affichercours";
 import RequireAuth from "./components/RequireAuth"
 
@@ -23,6 +23,7 @@ export default function App() {
           </Route>
           <Route path='/inscription' element={<Register />} />
           <Route path='/connexion' element={<Login />} />
+          <Route path='/deconnexion' element={<Logout />} />
       </Routes>
       </main>
       <footer>

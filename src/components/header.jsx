@@ -6,11 +6,13 @@ import {
 
 import logo from '../assets/images/logo-lms.png'; 
 import icon_nav from '../assets/images/icon-nav.svg'; 
+import useAuth from "../hooks/useAuth";
 
 
 export default function Header() {
 
     const [navbarOpen, setNavbarOpen] = useState(false)
+    const { auth } = useAuth();
 
     const handleToggle = () => {
         setNavbarOpen(!navbarOpen)
@@ -36,12 +38,18 @@ export default function Header() {
             <li>
               <Link to="/cours">Liste des cours</Link>
             </li>
-            <li>
-              <Link to="/inscription">S'inscrire</Link>
-            </li>
-            <li>
-              <Link to="/connexion">Se connecter</Link>
-            </li>
+            {!auth.user ? 
+              <><li>
+                  <Link to="/inscription">S'inscrire</Link>
+                </li>
+                <li>
+                  <Link to="/connexion">Se connecter</Link>
+                </li>
+              </> 
+            : <li>
+                <Link to="/deconnexion">Se déconnecter</Link>
+              </li>
+            }
           </ul>
         </nav>
 
@@ -54,12 +62,18 @@ export default function Header() {
             <li>
               <Link to="/cours"  onClick={() => closeMenu()} >Liste des cours</Link>
             </li>
-            <li>
-              <Link to="/inscription"  onClick={() => closeMenu()} >S'inscrire</Link>
-            </li>
-            <li>
-              <Link to="/connexion"  onClick={() => closeMenu()} >Se connecter</Link>
-            </li>
+            {!auth.user ? 
+              <><li>
+                  <Link to="/inscription" onClick={() => closeMenu()}>S'inscrire</Link>
+                </li>
+                <li>
+                  <Link to="/connexion" onClick={() => closeMenu()}>Se connecter</Link>
+                </li>
+              </> 
+            : <li>
+                <Link to="/deconnexion" onClick={() => closeMenu()}>Se déconnecter</Link>
+              </li>
+            }
           </ul>
         </nav>
 
