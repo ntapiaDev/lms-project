@@ -39,14 +39,14 @@ export default function Header() {
               <Link to="/cours">Liste des cours</Link>
             </li>
             {!auth.user ? 
-              <><li>
-                  <Link to="/inscription">S'inscrire</Link>
+              <><li className="button-inscription">
+                  <Link to="/inscription" >S'inscrire</Link>
                 </li>
-                <li>
+                <li className="button-connexion">
                   <Link to="/connexion">Se connecter</Link>
                 </li>
               </> 
-            : <li>
+            : <li className="button-deconnexion">
                 <Link to="/deconnexion">Se déconnecter</Link>
               </li>
             }

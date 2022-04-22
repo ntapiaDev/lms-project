@@ -157,9 +157,6 @@ figure{
   flex-direction: column;
   align-items: center;
 }
-figure img{
-  
-}
 
 .cours-content img{
   max-width: 100%;
@@ -178,6 +175,42 @@ figure img{
 .loading{
   font-size: 2em;
 }
+
+.button-inscription a{
+  border-bottom: rgb(60, 143, 60)  2px solid;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: rgb(76, 177, 76) ;
+  transition: 0.5s;
+}
+
+.button-connexion a{
+  border-bottom: rgb(19, 93, 190) 2px solid;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: rgb(0, 110, 255) ;
+  transition: 0.5s;
+}
+.button-deconnexion a{
+  border-bottom: rgb(145, 0, 0) 2px solid;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: rgb(179, 1, 1) ;
+  transition: 0.5s;
+}
+
+
+.button-inscription a:hover{
+  background-color: rgb(95, 204, 95) ;
+}
+.button-connexion a:hover{
+  background-color: rgb(37, 131, 255) ;
+}
+.button-deconnexion a:hover{
+  background-color: rgb(202, 0, 0) ;
+}
+
+
 
 @media screen and (min-width : 768px) {
   .cours-list{
@@ -261,6 +294,7 @@ figure img{
   }
   li{
     padding: 20px;
+    margin-left: -20px;
   }
   
   main{
