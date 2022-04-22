@@ -26,6 +26,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // Récupération du token
         try {
             const response = await axios.post(`jwt-auth/v1/token`,
             {
@@ -37,10 +38,23 @@ const Login = () => {
                     'Content-Type': 'application/json'
                 }
             });
-            console.log(response?.data);
             const accessToken = response?.data?.token;
-            console.log(accessToken);
-            const roles = 'null';
+            const name = response?.data?.user_display_name;
+
+            // Récupération du role
+            const responseRole = await axios.get(`wp/v2/users?context=edit`,
+            {   
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3RcL3dvcmRwcmVzcyIsImlhdCI6MTY1MDYyNzQ1MSwibmJmIjoxNjUwNjI3NDUxLCJleHAiOjE2NTEyMzIyNTEsImRhdGEiOnsidXNlciI6eyJpZCI6IjEifX19.LOEx1gC6aYjiZo-Di1dFRgEgkytqtS7DjxQi0aeT6fs'
+                }
+            });
+            let roles = '';
+            for (let i = 0; i < responseRole.data.length; i++) {
+                if (responseRole?.data[i].name === name) {
+                    roles = responseRole?.data[i].roles[0]
+                }
+            };
             setAuth({ user, pwd, roles, accessToken });
             setUser('');
             setPwd('');

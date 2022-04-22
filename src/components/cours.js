@@ -13,7 +13,7 @@ class CoursRow extends React.Component {
             <Link to={coursLink}>
                 <div className="cours-item">
                     <div className="cours-image">
-                        <img src={cours.acf.course_image} />
+                        <img src={cours.acf.course_image} alt='' />
                     </div>
                     <div className="cours-description">
                         <h3>{parse(cours.title.rendered)}</h3>

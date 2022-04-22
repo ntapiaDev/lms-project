@@ -27,7 +27,7 @@ export default function Header() {
           <Link to="/"><img src={logo} alt="Logo de l'application" /></Link>
           
           <button id="nav-mobile-button" onClick={handleToggle}>
-            <img src={icon_nav}/>
+            <img src={icon_nav} alt=''/>
           </button>
         </div>
         <nav  id="nav-desktop">

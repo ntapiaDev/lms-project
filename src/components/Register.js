@@ -8,9 +8,6 @@ const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const EMAIL_REGEX = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
-const AUTH_KEY_SUB = 'lFP18oU3XNQh8t1rLmlVMjrt7QJTI73k';
-const AUTH_KEY_EDI = 'DYfjnodinWbVaN9BLsl5YZsO1s9MPpiS';
-
 const Register = () => {
     const userRef = useRef();
     const errRef = useRef();
@@ -105,7 +102,6 @@ const Register = () => {
                         'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3RcL3dvcmRwcmVzcyIsImlhdCI6MTY1MDYyNzQ1MSwibmJmIjoxNjUwNjI3NDUxLCJleHAiOjE2NTEyMzIyNTEsImRhdGEiOnsidXNlciI6eyJpZCI6IjEifX19.LOEx1gC6aYjiZo-Di1dFRgEgkytqtS7DjxQi0aeT6fs'
                     }
                 });
-            console.log(response.data);
             navigate("../connexion", { replace: true })
         } catch (err) {
             console.log(err.response.data.data);
