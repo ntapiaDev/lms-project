@@ -90,7 +90,7 @@ const Register = () => {
         }
         
         try {
-            const response = await axios.post('users',
+            const response = await axios.post('wp/v2/users',
                 {
                     username: user,
                     password: pwd,

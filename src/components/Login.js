@@ -27,9 +27,18 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post(`auth&username=${user}&password=${pwd}`);
+            const response = await axios.post(`jwt-auth/v1/token`,
+            {
+                username: user,
+                password: pwd,
+            },
+            {   
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
             console.log(response?.data);
-            const accessToken = response?.data?.data.jwt;
+            const accessToken = response?.data?.token;
             console.log(accessToken);
             const roles = 'null';
             setAuth({ user, pwd, roles, accessToken });
