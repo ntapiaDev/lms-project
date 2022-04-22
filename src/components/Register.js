@@ -65,7 +65,7 @@ const Register = () => {
     const eleveRef = useRef();
     const profRef = useRef();
     const handleCheckbox = (ref) => {
-        if (ref === 'Élève') {
+        if (ref === 'subscriber') {
             profRef.current.checked = false;
         } else {
             eleveRef.current.checked = false;
@@ -90,8 +90,21 @@ const Register = () => {
         }
         
         try {
-            console.log(role);
-            const response = await axios.post(`users&user_login=${user}&password=${pwd}&email=${email}&AUTH_KEY=${role === 'Élève' ? AUTH_KEY_SUB : AUTH_KEY_EDI }`);
+            const response = await axios.post('users',
+                {
+                    username: user,
+                    password: pwd,
+                    email: email,
+                    roles: [
+                        role
+                    ]
+                },
+                {   
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3RcL3dvcmRwcmVzcyIsImlhdCI6MTY1MDYyNzQ1MSwibmJmIjoxNjUwNjI3NDUxLCJleHAiOjE2NTEyMzIyNTEsImRhdGEiOnsidXNlciI6eyJpZCI6IjEifX19.LOEx1gC6aYjiZo-Di1dFRgEgkytqtS7DjxQi0aeT6fs'
+                    }
+                });
             console.log(response.data);
             navigate("../connexion", { replace: true })
         } catch (err) {
@@ -211,7 +224,7 @@ const Register = () => {
                         type="checkbox"
                         id="eleve"
                         ref={eleveRef}
-                        onChange={() => handleCheckbox('Élève')}
+                        onChange={() => handleCheckbox('subscriber')}
                     />
                     <label htmlFor="eleve">Élève</label>
 
@@ -219,7 +232,7 @@ const Register = () => {
                         type="checkbox"
                         id="prof"
                         ref={profRef}
-                        onChange={() => handleCheckbox('Professeur')}
+                        onChange={() => handleCheckbox('editor')}
                     />
                     <label htmlFor="prof">Professeur</label>
                 </div>
