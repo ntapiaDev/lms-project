@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "../api/axios";
+import { axiosPrivate } from "../api/axios";
 
 const Users = () => {
     const [ users, setUsers ] = useState();
@@ -7,13 +7,7 @@ const Users = () => {
     useEffect(() => {
         const getUsers = async () => {
             try {
-                const response = await axios.get('wp/v2/users?context=edit', 
-                {   
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3RcL3dvcmRwcmVzcyIsImlhdCI6MTY1MDYyNzQ1MSwibmJmIjoxNjUwNjI3NDUxLCJleHAiOjE2NTEyMzIyNTEsImRhdGEiOnsidXNlciI6eyJpZCI6IjEifX19.LOEx1gC6aYjiZo-Di1dFRgEgkytqtS7DjxQi0aeT6fs`
-                    }
-                });
+                const response = await axiosPrivate.get('wp/v2/users?context=edit');
                 console.log(response.data);
                 setUsers(response.data);
             } catch(err) {

@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "../api/axios";
+import { axiosPrivate } from "../api/axios";
 import { Link, useNavigate } from "react-router-dom";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
@@ -87,7 +87,7 @@ const Register = () => {
         }
         
         try {
-            const response = await axios.post('wp/v2/users',
+            const response = await axiosPrivate.post('wp/v2/users',
                 {
                     username: user,
                     password: pwd,
@@ -95,19 +95,13 @@ const Register = () => {
                     roles: [
                         role
                     ]
-                },
-                {   
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3RcL3dvcmRwcmVzcyIsImlhdCI6MTY1MDYyNzQ1MSwibmJmIjoxNjUwNjI3NDUxLCJleHAiOjE2NTEyMzIyNTEsImRhdGEiOnsidXNlciI6eyJpZCI6IjEifX19.LOEx1gC6aYjiZo-Di1dFRgEgkytqtS7DjxQi0aeT6fs'
-                    }
                 });
             navigate("../connexion", { replace: true })
         } catch (err) {
-            console.log(err.response.data.data);
+            console.log(err.response.data.code);
             if (!err?.response) {
                 setErrMsg('Le serveur ne répond pas');
-            } else if (err.response?.data.data.errorCode === 38) {
+            } else if (err.response?.data.code === 'existing_user_login') {
                 setErrMsg('Nom d\'utilisateur ou email déjà pris');
             } else {
                 setErrMsg('Échec de l\'enregistrement');
