@@ -50,6 +50,9 @@ export default function Header() {
                 <li>
                   <Link to="/utilisateurs">Liste des membres</Link>
                 </li>
+                <li>
+                  <Link to="/profil">Profil</Link>
+                </li>
                 <li className="button-deconnexion">
                   <Link to="/deconnexion">Se déconnecter</Link>
                 </li>
@@ -78,6 +81,9 @@ export default function Header() {
             : <>
                 <li>
                   <Link to="/utilisateurs" onClick={() => closeMenu()}>Liste des membres</Link>
+                </li>
+                <li>
+                  <Link to="/profil" onClick={() => closeMenu()}>Profil</Link>
                 </li>
                 <li>
                   <Link to="/deconnexion" onClick={() => closeMenu()}>Se déconnecter</Link>

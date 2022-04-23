@@ -39,13 +39,12 @@ const Login = () => {
                 }
             });
             const accessToken = response?.data?.token;
-            const name = response?.data?.user_display_name;
 
             // Récupération du role
             const responseRole = await axiosPrivate.get(`wp/v2/users?context=edit`);
             let roles = '';
             for (let i = 0; i < responseRole.data.length; i++) {
-                if (responseRole?.data[i].name === name) {
+                if (responseRole?.data[i].name === user) {
                     roles = responseRole?.data[i].roles[0]
                 }
             };

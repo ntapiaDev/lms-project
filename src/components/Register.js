@@ -96,6 +96,7 @@ const Register = () => {
                         role
                     ]
                 });
+            console.log(response);
             navigate("../connexion", { replace: true })
         } catch (err) {
             console.log(err.response.data.code);
