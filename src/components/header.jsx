@@ -46,9 +46,14 @@ export default function Header() {
                   <Link to="/connexion">Se connecter</Link>
                 </li>
               </> 
-            : <li className="button-deconnexion">
-                <Link to="/deconnexion">Se déconnecter</Link>
-              </li>
+            : <>
+                <li>
+                  <Link to="/utilisateurs">Liste des membres</Link>
+                </li>
+                <li className="button-deconnexion">
+                  <Link to="/deconnexion">Se déconnecter</Link>
+                </li>
+              </>
             }
           </ul>
         </nav>
@@ -70,9 +75,14 @@ export default function Header() {
                   <Link to="/connexion" onClick={() => closeMenu()}>Se connecter</Link>
                 </li>
               </> 
-            : <li>
-                <Link to="/deconnexion" onClick={() => closeMenu()}>Se déconnecter</Link>
-              </li>
+            : <>
+                <li>
+                  <Link to="/utilisateurs" onClick={() => closeMenu()}>Liste des membres</Link>
+                </li>
+                <li>
+                  <Link to="/deconnexion" onClick={() => closeMenu()}>Se déconnecter</Link>
+                </li>
+              </>
             }
           </ul>
         </nav>

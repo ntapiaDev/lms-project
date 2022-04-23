@@ -58,7 +58,7 @@ const Login = () => {
             setAuth({ user, pwd, roles, accessToken });
             setUser('');
             setPwd('');
-            navigate(from, { replace: true });
+            navigate(from !== '/deconnexion' ? from : "/", { replace: true });
         } catch (err) {
             console.log(err.response.data.data);
             if (!err?.response) {

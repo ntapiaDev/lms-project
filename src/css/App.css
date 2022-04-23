@@ -210,7 +210,11 @@ figure{
   background-color: rgb(202, 0, 0) ;
 }
 
-
+/* User list */
+.userlist ul {
+  display: flex;
+  flex-direction: column;
+}
 
 @media screen and (min-width : 768px) {
   .cours-list{

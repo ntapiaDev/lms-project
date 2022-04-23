@@ -8,6 +8,7 @@ import Login from "./components/Login";
 import Logout from "./components/Logout";
 import AfficherCours from "./components/affichercours";
 import RequireAuth from "./components/RequireAuth"
+import Users from "./components/Users";
 
 export default function App() {
   
@@ -20,10 +21,11 @@ export default function App() {
           <Route element={<RequireAuth />}>
             <Route path='/cours' element={<Cours />} />
             <Route path='/:slug' element={<AfficherCours />} />
+            <Route path='/utilisateurs' element={<Users />} />
+            <Route path='/deconnexion' element={<Logout />} />
           </Route>
           <Route path='/inscription' element={<Register />} />
           <Route path='/connexion' element={<Login />} />
-          <Route path='/deconnexion' element={<Logout />} />
       </Routes>
       </main>
       <footer>
