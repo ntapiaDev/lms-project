@@ -44,7 +44,7 @@ const Login = () => {
             const responseRole = await axiosPrivate.get(`wp/v2/users?context=edit`);
             let roles = '';
             for (let i = 0; i < responseRole.data.length; i++) {
-                if (responseRole?.data[i].name === user) {
+                if (responseRole?.data[i].username === user) {
                     roles = responseRole?.data[i].roles[0]
                 }
             };

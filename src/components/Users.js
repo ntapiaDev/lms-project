@@ -31,11 +31,16 @@ const Users = () => {
             {users?.length
                 ? (
                     <ul ref={listRef}>
-                        {users.map((user, i) => <li key={i}>{user.name} - {user.email} -
+                        {users.map((user, i) => <li key={i}><strong>{user.name}</strong> - {user.email} -
                             {user.roles[0] === 'subscriber' ? <span style={{color: "blue"}}> Élève </span> : ''}
                             {user.roles[0] === 'editor' ? <span style={{color: "green"}}> Professeur </span> : ''}
                             {user.roles[0] === 'administrator' ? <span style={{color: "red"}}> Administrateur </span> : ''}
-                        <FontAwesomeIcon icon={faTimes} className="invalid pointer" onClick={() => deleteUser(user?.id, i)} /></li>)}
+                        <FontAwesomeIcon icon={faTimes} className="invalid pointer" onClick={() => deleteUser(user?.id, i)} /><br />
+                        <p>Cours suivis :</p>
+                        <ul>
+                            <li>Cours 1</li>
+                            <li>Cours 2</li>
+                        </ul></li>)}
                     </ul>
                 ) : <p>Aucun utilisateur à afficher</p>
             }
