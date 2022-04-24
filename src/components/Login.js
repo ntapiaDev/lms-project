@@ -41,14 +41,17 @@ const Login = () => {
             const accessToken = response?.data?.token;
 
             // Récupération du role
-            const responseRole = await axiosPrivate.get(`wp/v2/users?context=edit`);
+            const responseUser = await axiosPrivate.get(`wp/v2/users?context=edit`);
+            let id = '';
             let roles = '';
-            for (let i = 0; i < responseRole.data.length; i++) {
-                if (responseRole?.data[i].username === user) {
-                    roles = responseRole?.data[i].roles[0]
+            for (let i = 0; i < responseUser.data.length; i++) {
+                console.log(responseUser.data[i]);
+                if (responseUser.data[i].username.toLowerCase() === user.toLowerCase()) {
+                    id = responseUser.data[i].id
+                    roles = [responseUser.data[i].roles[0]]
                 }
             };
-            setAuth({ user, pwd, roles, accessToken });
+            setAuth({ id, user, pwd, roles, accessToken });
             setUser('');
             setPwd('');
             navigate(from !== '/deconnexion' ? from : "/", { replace: true });

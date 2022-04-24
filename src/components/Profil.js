@@ -16,15 +16,7 @@ const Profil = () => {
 
     const getProfil = async () => {
       try {
-        const getId = await axiosPrivate.get(`wp/v2/users?context=edit`);
-        let id = '';
-        for (let i = 0; i < getId.data.length; i++) {
-          if (getId?.data[i].username === auth.user) {
-            id = getId?.data[i].id
-          }
-        };
-
-        const getData = await axiosPrivate.get(`wp/v2/users/${id}?context=edit`);
+        const getData = await axiosPrivate.get(`wp/v2/users/${auth.id}?context=edit`);
         console.log(getData.data);
         setUserFirsname(getData.data.first_name);
         setUserLastname(getData.data.last_name);
@@ -46,11 +38,11 @@ const Profil = () => {
     }
 
     getProfil();
-}, []);
+});
 
   return (
     <section className="profil">
-      <h2>Profil</h2>
+      <h2>Page de profil</h2>
 
       <section className="infos">
       <h4>Informations personnelles :</h4>

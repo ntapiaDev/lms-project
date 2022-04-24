@@ -8,7 +8,6 @@ import logo from '../assets/images/logo-lms.png';
 import icon_nav from '../assets/images/icon-nav.svg'; 
 import useAuth from "../hooks/useAuth";
 
-
 export default function Header() {
 
     const [navbarOpen, setNavbarOpen] = useState(false)
@@ -47,17 +46,26 @@ export default function Header() {
                 </li>
               </> 
             : <>
+            {auth.roles[0] === 'editor' || auth.roles[0] === 'administrator' ?
+              <>
                 <li>
                   <Link to="/utilisateurs">Liste des membres</Link>
                 </li>
                 <li>
-                  <Link to="/profil">Profil</Link>
+                  <Link to="/publier">Nouveau cours</Link>
                 </li>
-                <li className="button-deconnexion">
-                  <Link to="/deconnexion">Se déconnecter</Link>
-                </li>
-              </>
-            }
+                </>
+              : '' }
+            <>
+              <li>
+                <Link to="/profil">Profil</Link>
+              </li>
+              <li className="button-deconnexion">
+                <Link to="/deconnexion">Se déconnecter</Link>
+              </li>
+            </>
+          </>
+        }
           </ul>
         </nav>
 
@@ -79,15 +87,24 @@ export default function Header() {
                 </li>
               </> 
             : <>
-                <li>
-                  <Link to="/utilisateurs" onClick={() => closeMenu()}>Liste des membres</Link>
-                </li>
-                <li>
-                  <Link to="/profil" onClick={() => closeMenu()}>Profil</Link>
-                </li>
-                <li>
-                  <Link to="/deconnexion" onClick={() => closeMenu()}>Se déconnecter</Link>
-                </li>
+                {auth.roles[0] === 'editor' || auth.roles[0] === 'administrator' ?
+                  <>
+                    <li>
+                      <Link to="/utilisateurs" onClick={() => closeMenu()}>Liste des membres</Link>
+                    </li>
+                    <li>
+                      <Link to="/publier" onClick={() => closeMenu()}>Nouveau cours</Link>
+                    </li>
+                    </>
+                  : '' }
+                <>
+                  <li>
+                    <Link to="/profil" onClick={() => closeMenu()}>Profil</Link>
+                  </li>
+                  <li>
+                    <Link to="/deconnexion" onClick={() => closeMenu()}>Se déconnecter</Link>
+                  </li>
+                </>
               </>
             }
           </ul>
