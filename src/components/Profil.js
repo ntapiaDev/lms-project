@@ -11,6 +11,7 @@ const Profil = () => {
   // Reset pwd avec matchPwd
 
   const { auth } = useAuth();
+  console.log('coucou');
 
   useEffect(() => {
 
@@ -30,14 +31,14 @@ const Profil = () => {
           setUserRole('Non défini')
         }
         setUserEmail(getData.data.email);
-
+        
       } catch(err) {
         console.error(err);
       }
     }
 
     getProfil();
-  });
+  }, [auth.id]);
 
   const handleInfoSubmit = async (e) => {
     e.preventDefault();
