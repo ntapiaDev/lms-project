@@ -3,11 +3,11 @@ import { axiosPrivate } from "../api/axios";
 import useAuth from "../hooks/useAuth";
 
 const Profil = () => {
-  const [userFirsname, setUserFirsname ] = useState();
-  const [userLastname, setUserLastname ] = useState();
-  const [userDisplayname, setUserDisplayname ] = useState();
-  const [userRole, setUserRole ] = useState();
-  const [userEmail, setUserEmail ] = useState();
+  const [userFirstname, setUserFirstname ] = useState('');
+  const [userLastname, setUserLastname ] = useState('');
+  const [userDisplayname, setUserDisplayname ] = useState('');
+  const [userRole, setUserRole ] = useState('');
+  const [userEmail, setUserEmail ] = useState('');
   // Reset pwd avec matchPwd
 
   const { auth } = useAuth();
@@ -17,8 +17,7 @@ const Profil = () => {
     const getProfil = async () => {
       try {
         const getData = await axiosPrivate.get(`wp/v2/users/${auth.id}?context=edit`);
-        console.log(getData.data);
-        setUserFirsname(getData.data.first_name);
+        setUserFirstname(getData.data.first_name);
         setUserLastname(getData.data.last_name);
         setUserDisplayname(getData.data.name);
         if (getData.data.roles[0] === 'subscriber') {
@@ -38,15 +37,31 @@ const Profil = () => {
     }
 
     getProfil();
-});
+  });
+
+  const handleInfoSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axiosPrivate.post('wp/v2/users',
+        {
+          first_name: userFirstname,
+          last_name: userLastname,
+          user_display_name: userDisplayname,
+          email: userEmail
+        });
+      console.log(response);
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   return (
     <section className="profil">
       <h2>Page de profil</h2>
 
       <section className="infos">
-      <h4>Informations personnelles :</h4>
-        <form>
+        <h4>Informations personnelles :</h4>
+        <form onSubmit={handleInfoSubmit}>
           <div className="line">
             <label htmlFor="user">
               Utilisateur :
@@ -64,9 +79,9 @@ const Profil = () => {
             </label>
             <input 
               type="text" 
-              id="firsname"
-              value={userFirsname}
-              onChange={(e) => setUserFirsname(e.target.value)}
+              id="firstname"
+              value={userFirstname}
+              onChange={(e) => setUserFirstname(e.target.value)}
             />
           </div>
           <div className="line">
@@ -114,36 +129,35 @@ const Profil = () => {
             />
           </div>
           <button className="form-btn">Mettre à jour mes informations</button>
+        </form>
 
-          <h4>Changer mon mot de passe :</h4>
-          <form>
-            <div className="line">
-              <label>
-                Mot de passe actuel
-              </label>
-              <input
-                type="password"
-                id="" />
-            </div>
-            <div className="line">
-              <label>
-                Nouveau mot de passe
-              </label>
-              <input
-                type="password"
-                id="" />
-            </div>
-            <div className="line">
-              <label>
-                Confirmation
-              </label>
-              <input
-                type="password"
-                id="" />
-            </div>
-            <button className="form-btn">Changer mon mot de passe</button>
-          </form>
-          <hr />
+        <h4>Changer mon mot de passe :</h4>
+        <form>
+          <div className="line">
+            <label htmlFor="password">
+              Mot de passe actuel
+            </label>
+            <input
+              type="password"
+              id="password" />
+          </div>
+          <div className="line">
+          <label htmlFor="newPwd">
+              Nouveau mot de passe
+            </label>
+            <input
+              type="password"
+              id="newPwd" />
+          </div>
+          <div className="line">
+          <label htmlFor="matchPwd">
+              Confirmation
+            </label>
+            <input
+              type="password"
+              id="matchPwd" />
+          </div>
+          <button className="form-btn">Changer mon mot de passe</button>
         </form>
       </section>
 

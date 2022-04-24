@@ -2,7 +2,9 @@
 
 const Publish = () => {
   return (
-    <div>Publish</div>
+    <section>
+        <h2>Publier un cours</h2>
+    </section>
   )
 }
 

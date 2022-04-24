@@ -38,6 +38,7 @@ const Login = () => {
                     'Content-Type': 'application/json'
                 }
             });
+            const displayname = response?.data?.user_display_name
             const accessToken = response?.data?.token;
 
             // Récupération du role
@@ -45,13 +46,12 @@ const Login = () => {
             let id = '';
             let roles = '';
             for (let i = 0; i < responseUser.data.length; i++) {
-                console.log(responseUser.data[i]);
                 if (responseUser.data[i].username.toLowerCase() === user.toLowerCase()) {
                     id = responseUser.data[i].id
                     roles = [responseUser.data[i].roles[0]]
                 }
             };
-            setAuth({ id, user, pwd, roles, accessToken });
+            setAuth({ id, user, displayname, pwd, roles, accessToken });
             setUser('');
             setPwd('');
             navigate(from !== '/deconnexion' ? from : "/", { replace: true });
