@@ -243,7 +243,11 @@ figure{
 }
 
 .infos, .liste-cours {
-  width: 50%;
+  width: calc(50% - 50px);
+  background-color: rgba(238, 238, 238, 0.75);
+  margin: 25px;
+  padding: 25px;
+  border-radius: 25px;
 }
 
 .infos form {
@@ -256,7 +260,7 @@ figure{
 }
 
 .infos label {
-  width: 200px;
+  width: 250px;
 }
 
 .infos h4 {
