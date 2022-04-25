@@ -30,6 +30,8 @@ const Profil = () => {
   const [matchPassword, setMatchPassword ] = useState('');
   const [validMatch, setValidMatch] = useState(false);
 
+  const [classes, setClasses] = useState('');
+
   const [errMsg, setErrMsg] = useState('');
   const [succMsg, setSuccMsg] = useState('');
 
@@ -75,6 +77,14 @@ const Profil = () => {
         setUserFirstname(getData.data.first_name);
         setUserLastname(getData.data.last_name);
         setUserDisplayname(getData.data.nickname);
+        setClasses(getData.data.acf.followed_class.split(','));
+        console.log('cours suivi : ', classes);
+
+        // Récupération des infos de cours
+        for (let i = 0; i < classes.length; i++) {
+          const getClasses = await axiosPrivate.get(`wp/v2/post/${getClasses[i]}`);
+        }
+
         if (getData.data.roles[0] === 'subscriber') {
           setUserRole('Élève')
         } else if (getData.data.roles[0] === 'editor') {
@@ -294,6 +304,13 @@ const Profil = () => {
 
       <section className="liste-cours">
         <h4>Liste des cours suivis :</h4>
+        {classes?.length
+          ? (
+              <ul>
+                  {classes.map((clas, i) => <li key={i}><strong>{classes[i]}</strong></li>)}
+              </ul>
+          ) : <p>Aucun cours à afficher</p>
+        }
       </section>
     </section>
   )
