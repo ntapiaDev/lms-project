@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import useAuth from "../hooks/useAuth";
-import axios from "../api/axios";
+import axios, { axiosPrivate } from "../api/axios";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
 const Login = () => {
@@ -26,16 +26,35 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // Récupération du token
         try {
-            const response = await axios.post(`auth&username=${user}&password=${pwd}`);
-            console.log(response?.data);
-            const accessToken = response?.data?.data.jwt;
-            console.log(accessToken);
-            const roles = 'null';
-            setAuth({ user, pwd, roles, accessToken });
+            const response = await axios.post(`jwt-auth/v1/token`,
+            {
+                username: user,
+                password: pwd,
+            },
+            {   
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const displayname = response?.data?.user_display_name
+            const accessToken = response?.data?.token;
+
+            // Récupération du role
+            const responseUser = await axiosPrivate.get(`wp/v2/users?context=edit`);
+            let id = '';
+            let roles = '';
+            for (let i = 0; i < responseUser.data.length; i++) {
+                if (responseUser.data[i].username.toLowerCase() === user.toLowerCase()) {
+                    id = responseUser.data[i].id
+                    roles = [responseUser.data[i].roles[0]]
+                }
+            };
+            setAuth({ id, user, displayname, pwd, roles, accessToken });
             setUser('');
             setPwd('');
-            navigate(from, { replace: true });
+            navigate(from !== '/deconnexion' ? from : "/", { replace: true });
         } catch (err) {
             console.log(err.response.data.data);
             if (!err?.response) {

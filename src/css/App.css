@@ -210,7 +210,65 @@ figure{
   background-color: rgb(202, 0, 0) ;
 }
 
+/* User list */
+.userlist ul {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+}
 
+.userlist li {
+  margin: 1px;
+  background-color: rgba(238, 238, 238, 0.5);
+  border: 1px solid black;
+}
+.userlist li li {
+  padding: 5px;
+  background-color: rgba(238, 238, 238, 0.5);
+}
+
+/* Profil */
+
+.profil {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+
+.profil h2 {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.infos, .liste-cours {
+  width: calc(50% - 50px);
+  background-color: rgba(238, 238, 238, 0.75);
+  margin: 25px;
+  padding: 25px;
+  border-radius: 25px;
+}
+
+.infos form {
+  width: 100%;
+}
+
+.infos .line {
+  display: flex;
+  align-items: center;
+}
+
+.infos label {
+  width: 250px;
+}
+
+.infos h4 {
+  margin-bottom: 25px;
+}
+.infos button + h4 {
+  margin-top: 25px;
+}
 
 @media screen and (min-width : 768px) {
   .cours-list{

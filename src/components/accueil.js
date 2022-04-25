@@ -10,7 +10,7 @@ function Accueil() {
         return (
             <div>
                 <h1>Bienvenue sur LMS Projet</h1>
-                <p>{auth?.user ? `Bonjour ${auth?.user}, vous êtes connecté.` : ''}</p>
+                <p>{auth?.user ? `Bonjour ${auth?.displayname}, vous êtes connecté.` : ''}</p>
                 <Cours />
             </div>
         );

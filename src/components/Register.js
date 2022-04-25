@@ -1,15 +1,12 @@
 import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "../api/axios";
+import { axiosPrivate } from "../api/axios";
 import { Link, useNavigate } from "react-router-dom";
 
-const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
+const USER_REGEX = /^[A-z][A-z0-9-_]{2,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const EMAIL_REGEX = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
-
-const AUTH_KEY_SUB = 'lFP18oU3XNQh8t1rLmlVMjrt7QJTI73k';
-const AUTH_KEY_EDI = 'DYfjnodinWbVaN9BLsl5YZsO1s9MPpiS';
 
 const Register = () => {
     const userRef = useRef();
@@ -65,7 +62,7 @@ const Register = () => {
     const eleveRef = useRef();
     const profRef = useRef();
     const handleCheckbox = (ref) => {
-        if (ref === 'Élève') {
+        if (ref === 'subscriber') {
             profRef.current.checked = false;
         } else {
             eleveRef.current.checked = false;
@@ -90,15 +87,22 @@ const Register = () => {
         }
         
         try {
-            console.log(role);
-            const response = await axios.post(`users&user_login=${user}&password=${pwd}&email=${email}&AUTH_KEY=${role === 'Élève' ? AUTH_KEY_SUB : AUTH_KEY_EDI }`);
-            console.log(response.data);
+            const response = await axiosPrivate.post('wp/v2/users',
+                {
+                    username: user,
+                    password: pwd,
+                    email: email,
+                    roles: [
+                        role
+                    ]
+                });
+            console.log(response);
             navigate("../connexion", { replace: true })
         } catch (err) {
-            console.log(err.response.data.data);
+            console.log(err.response.data.code);
             if (!err?.response) {
                 setErrMsg('Le serveur ne répond pas');
-            } else if (err.response?.data.data.errorCode === 38) {
+            } else if (err.response?.data.code === 'existing_user_login') {
                 setErrMsg('Nom d\'utilisateur ou email déjà pris');
             } else {
                 setErrMsg('Échec de l\'enregistrement');
@@ -211,7 +215,7 @@ const Register = () => {
                         type="checkbox"
                         id="eleve"
                         ref={eleveRef}
-                        onChange={() => handleCheckbox('Élève')}
+                        onChange={() => handleCheckbox('subscriber')}
                     />
                     <label htmlFor="eleve">Élève</label>
 
@@ -219,7 +223,7 @@ const Register = () => {
                         type="checkbox"
                         id="prof"
                         ref={profRef}
-                        onChange={() => handleCheckbox('Professeur')}
+                        onChange={() => handleCheckbox('editor')}
                     />
                     <label htmlFor="prof">Professeur</label>
                 </div>
