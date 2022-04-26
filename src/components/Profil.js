@@ -3,6 +3,7 @@ import axios, { axiosPrivate } from "../api/axios";
 import useAuth from "../hooks/useAuth";
 import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ProfilClass from "./ProfilClass";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{2,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -307,16 +308,8 @@ const Profil = () => {
         </form>
       </section>
 
-      <section className="liste-cours">
-        <h4>Liste des cours suivis :</h4>
-        {classesName?.length
-          ? (
-              <ul>
-                  {classesName.map((clas, i) => <li key={i}><a href={classesLink[i]}>{classesName[i]}</a></li>)}
-              </ul>
-          ) : <p>Aucun cours à afficher</p>
-        }
-      </section>
+      <ProfilClass className={classesName} classLink={classesLink} />
+    
     </section>
   )
 }
