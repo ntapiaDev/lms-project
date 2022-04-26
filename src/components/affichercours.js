@@ -12,7 +12,8 @@ export default class AfficherCours extends React.Component {
     }
     
     componentDidMount() {
-        fetch('https://projet-lms-afpa.000webhostapp.com/wp-json/wp/v2/cours/')
+        let slug = window.location.pathname.slice(1)
+        fetch(`http://decouvertewordpress/wp-json/wp/v2/posts/?slug=${slug}`)
             .then(response => response.json())
             .then(data => this.setState({ coursListe: data, isLoaded : true }));
         
@@ -26,15 +27,9 @@ export default class AfficherCours extends React.Component {
             </div>;
         }
         else if (isLoaded){
-            let titlecours
-            let cours
-            let slug = window.location.pathname.slice(1)
-            for (let i = 0; i < coursListe.length; i++) {
-                if (coursListe[i].slug === slug) {
-                    titlecours = coursListe[i].title.rendered
-                    cours = coursListe[i].content.rendered
-                }
-            }
+            console.log(coursListe[0]);
+            let titlecours = coursListe[0].title.rendered
+            let cours = coursListe[0].content.rendered
             return (
                 
                 <div class="cours-content">
