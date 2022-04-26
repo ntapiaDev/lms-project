@@ -12,11 +12,12 @@ const Publish = () => {
     const [courseTitle, setCourseTitle] = useState('');
     const [courseDuration, setCourseDuration] = useState('');
     const [courseContent, setCourseContent] = useState('');
+    const [courseID, setCourseID] = useState('');
   
 
     const handleSubmit = (event) => {
       event.preventDefault()
-      const response = axiosPrivate.post('wp/v2/posts',
+      const response = axiosPrivate.post(`wp/v2/posts/${courseID}`,
       {
           title: courseTitle,
           acf: {
@@ -40,6 +41,7 @@ const Publish = () => {
         setCourseTitle(getData.data[0].title.rendered);
         setCourseDuration(getData.data[0].acf.course_duration);
         setCourseContent(getData.data[0].content.rendered);
+        setCourseID(getData.data[0].id);
         
       } catch(err) {
         console.error(err);
@@ -91,6 +93,7 @@ const Publish = () => {
                 </label>
                 <textarea
                   name="courseContent"
+                  value={courseContent}
                   onChange={(e) => setCourseContent(e.target.value)} 
                   id="content"
                   rows="20"

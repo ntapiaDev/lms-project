@@ -334,6 +334,24 @@ figure{
   width: 100%;
 }
 
+
+.cours-instructor{
+  display: flex;
+  align-items: center;
+}
+
+.cours-instructor a{
+  width: 70%;
+}
+
+.cours-instructor div{
+  width: 30%;
+}
+
+.cours-instructor button{
+  margin-left: 20px;
+}
+
 @media screen and (min-width : 768px) {
   
 

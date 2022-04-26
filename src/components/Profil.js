@@ -339,6 +339,8 @@ const MesCours = () => {
   const [CourseListInstructor, setCourseListInstructor] = useState('');
   const [CourseListInstructorLink, setCourseListInstructorLink] = useState('');
   const [CourseEditLink, setCourseEditLink] = useState('');
+  const [CourseID, setCourseID] = useState('');
+  const [CourseDelete, setCourseDelete] = useState(true);
 
   // useEffect(() => {
   //   const result = PWD_REGEX.test(oldPassword);
@@ -353,22 +355,36 @@ const MesCours = () => {
         let CourseListInstructor = [];
         let CourseListInstructorLink = [];
         let CourseEditLink = [];
+        let CourseID = [];
         for (let i = 0; i < getCourseInstructor.data.length; i++) {
           CourseListInstructor.push(getCourseInstructor.data[i].title.rendered);
           CourseListInstructorLink.push(getCourseInstructor.data[i].link);
           CourseEditLink.push(`../${getCourseInstructor.data[i].slug}/edit`);
+          CourseID.push(getCourseInstructor.data[i].id);
         }
-        console.log(CourseEditLink);
         setCourseListInstructor(CourseListInstructor);
         setCourseListInstructorLink(CourseListInstructorLink);
         setCourseEditLink(CourseEditLink);
-
+        setCourseID(CourseID);
+        setCourseDelete(true);
       } catch(err) {
         console.error(err);
       }
     }
     getCourses();
-  }, [auth.id]);
+  }, [auth.id, CourseDelete]);
+
+
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    console.log(event);
+    const response = await axiosPrivate.delete(`wp/v2/posts/${event.target.id}`);
+    console.log(response);
+    setCourseDelete(false);
+
+  };
+
 
 
   return(
@@ -382,11 +398,11 @@ const MesCours = () => {
               ? (
                   <ul>
                       {CourseListInstructor.map((clas, i) => 
-                      <li key={i}>
+                      <li key={i} className="cours-instructor">
                         <a href={CourseListInstructorLink[i]}>{parse(CourseListInstructor[i])}</a>
                         <div className="button-list">
                           <Link to={CourseEditLink[i]} ><button >Editer</button></Link>
-                          <button>Supprimer</button>
+                          <button  id={CourseID[i]} onClick={handleSubmit}>Supprimer</button>
                         </div>
                       </li>
                       )}
@@ -394,7 +410,7 @@ const MesCours = () => {
                   </ul>
               ) : <p>Aucun cours à afficher</p>
             }
-            <Link to="/publier" ><button className="form-btn" >Ajouter un cours</button></Link>
+            <Link to="/publier" ><button className="form-btn" id="ajouter-cours-bouton">Ajouter un cours</button></Link>
           </section>
         </>
         : 
