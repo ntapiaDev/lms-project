@@ -37,7 +37,6 @@ const Profil = () => {
   const [succMsg, setSuccMsg] = useState('');
 
   const { auth } = useAuth();
-  console.log('coucou');
 
   useEffect(() => {
     const result = USER_REGEX.test(userFirstname);

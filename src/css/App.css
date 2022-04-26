@@ -301,11 +301,11 @@ figure{
   padding: 0;
   margin: 10px;
 }
-.liste-cours a {
+.liste-cours a, .userlist a {
   color: #000;
   text-decoration: none;
 }
-.liste-cours a:visited {
+.liste-cours a:visited, .userlist a:visited {
   color: #000;
 }
 
