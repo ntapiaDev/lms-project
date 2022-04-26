@@ -27,13 +27,12 @@ const UsersClass = ({followed_class}) => {
       setClassLink(classLinkList);
     }
     getClasses();
-  }, []);
+  }, [classes.length, followed_class]);
 
   return (
     <ul>
       {className?.map((Name, i ) => <li key={i}><a href={classLink[i]}>{Name}</a></li>)}
     </ul>
-    
   )
 }
 

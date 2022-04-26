@@ -157,6 +157,7 @@ const Profil = () => {
                 'Content-Type': 'application/json'
             }
         });
+        console.log(checkPwd);
       // Mise à jour du nouveau mot de passe :
       const response = await axiosPrivate.post(`wp/v2/users/${auth.id}`,
         {
