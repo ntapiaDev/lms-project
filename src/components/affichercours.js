@@ -13,7 +13,8 @@ export default class AfficherCours extends React.Component {
     
     componentDidMount() {
         let slug = window.location.pathname.slice(1)
-        fetch(`http://decouvertewordpress/wp-json/wp/v2/posts/?slug=${slug}`)
+        // fetch(`http://decouvertewordpress/wp-json/wp/v2/posts/?slug=${slug}`)
+        fetch(`https://projet-lms-afpa.000webhostapp.com/wp-json/wp/v2/cours/?slug=${slug}`)
             .then(response => response.json())
             .then(data => this.setState({ coursListe: data, isLoaded : true }));
         
