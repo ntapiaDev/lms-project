@@ -3,6 +3,7 @@ import axios from "../api/axios";
 
 const UsersClass = ({followed_class}) => {
 
+
   const [ className, setClassName ] = useState();
   const [ classLink, setClassLink ] = useState();
 
