@@ -3,10 +3,12 @@ import { axiosPrivate } from "../api/axios";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UsersClass from "./UsersClass";
+import useAuth from "../hooks/useAuth";
 
 const Users = () => {
     const [ users, setUsers ] = useState();
     const [ userDeleted, setUserDeleted] = useState(0);
+    const { auth } = useAuth();
 
     useEffect(() => {
         const getUsers = async () => {
@@ -37,7 +39,7 @@ const Users = () => {
                             {user.roles[0] === 'subscriber' ? <span style={{color: "blue"}}> Élève </span> : ''}
                             {user.roles[0] === 'editor' ? <span style={{color: "green"}}> Professeur </span> : ''}
                             {user.roles[0] === 'administrator' ? <span style={{color: "red"}}> Administrateur </span> : ''}
-                        <FontAwesomeIcon icon={faTimes} className="invalid pointer" onClick={() => deleteUser(user?.id)} /><br />
+                        {auth.roles[0] === 'administrator' ? <FontAwesomeIcon icon={faTimes} className="invalid pointer" onClick={() => deleteUser(user?.id)} /> : ''}<br />
                         <p>Cours suivis :</p>
                         {user.acf.followed_class !== '' ? <UsersClass followed_class={user.acf.followed_class}/> : 'Aucun cours suivi actuellement'}
                         </li>)}
