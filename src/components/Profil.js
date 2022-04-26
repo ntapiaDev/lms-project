@@ -3,6 +3,11 @@ import axios, { axiosPrivate } from "../api/axios";
 import useAuth from "../hooks/useAuth";
 import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import parse from 'html-react-parser';
+import {
+  Link
+} from "react-router-dom";
+
 import ProfilClass from "./ProfilClass";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{2,23}$/;
@@ -96,7 +101,7 @@ const Profil = () => {
           setClassesLink(classesLinks);
         } catch (err) {
           console.log(err);
-        }        
+        }
 
         if (getData.data.roles[0] === 'subscriber') {
           setUserRole('Élève')
@@ -316,10 +321,104 @@ const Profil = () => {
         </form>
       </section>
 
+      <MesCours />
       <ProfilClass className={classesName} classLink={classesLink} classList={classesList} setRemovedClass={setRemovedClass}/>
     
     </section>
   )
 }
+
+
+
+const MesCours = () => {
+
+  const { auth } = useAuth();
+  const [CourseListInstructor, setCourseListInstructor] = useState('');
+  const [CourseListInstructorLink, setCourseListInstructorLink] = useState('');
+  const [CourseEditLink, setCourseEditLink] = useState('');
+  const [CourseID, setCourseID] = useState('');
+  const [CourseDelete, setCourseDelete] = useState(true);
+
+  // useEffect(() => {
+  //   const result = PWD_REGEX.test(oldPassword);
+  //   setValidOldPwd(result);
+  // }, [oldPassword])
+
+  useEffect(() => {
+    const getCourses = async () => {
+      try {
+        const getCourseInstructor = await axiosPrivate.get(`wp/v2/posts/?author=${auth.id}`);
+        // Récupération des infos de cours
+        let CourseListInstructor = [];
+        let CourseListInstructorLink = [];
+        let CourseEditLink = [];
+        let CourseID = [];
+        for (let i = 0; i < getCourseInstructor.data.length; i++) {
+          CourseListInstructor.push(getCourseInstructor.data[i].title.rendered);
+          CourseListInstructorLink.push(getCourseInstructor.data[i].link);
+          CourseEditLink.push(`../${getCourseInstructor.data[i].slug}/edit`);
+          CourseID.push(getCourseInstructor.data[i].id);
+        }
+        setCourseListInstructor(CourseListInstructor);
+        setCourseListInstructorLink(CourseListInstructorLink);
+        setCourseEditLink(CourseEditLink);
+        setCourseID(CourseID);
+        setCourseDelete(true);
+      } catch(err) {
+        console.error(err);
+      }
+    }
+    getCourses();
+  }, [auth.id, CourseDelete]);
+
+
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    console.log(event);
+    const response = await axiosPrivate.delete(`wp/v2/posts/${event.target.id}`);
+    console.log(response);
+    setCourseDelete(false);
+
+  };
+
+
+
+  return(
+    
+      <>
+      {auth.roles[0] === 'editor' || auth.roles[0] === 'administrator' ?
+        <>
+          <section className="liste-cours-instructor">
+            <h4>Mes cours créés</h4>
+            {CourseListInstructor?.length
+              ? (
+                  <ul>
+                      {CourseListInstructor.map((clas, i) => 
+                      <li key={i} className="cours-instructor">
+                        <a href={CourseListInstructorLink[i]}>{parse(CourseListInstructor[i])}</a>
+                        <div className="button-list">
+                          <Link to={CourseEditLink[i]} ><button >Editer</button></Link>
+                          <button  id={CourseID[i]} onClick={handleSubmit}>Supprimer</button>
+                        </div>
+                      </li>
+                      )}
+
+                  </ul>
+              ) : <p>Aucun cours à afficher</p>
+            }
+            <Link to="/publier" ><button className="form-btn" id="ajouter-cours-bouton">Ajouter un cours</button></Link>
+          </section>
+        </>
+        : 
+        '' }
+
+      </>
+
+  )
+
+
+}
+
 
 export default Profil;

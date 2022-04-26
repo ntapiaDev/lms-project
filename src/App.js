@@ -11,6 +11,7 @@ import RequireAuth from "./components/RequireAuth"
 import Users from "./components/Users";
 import Profil from "./components/Profil";
 import Publish from "./components/Publish";
+import Edit from "./components/Edit";
 import Unauthorized from "./components/Unauthorized";
 
 export default function App() {
@@ -28,6 +29,7 @@ export default function App() {
           <Route element={<RequireAuth allowedRoles={["editor", "administrator"]}/>}>
             <Route path='/utilisateurs' element={<Users />} />
             <Route path='/publier' element={<Publish />} />
+            <Route path='/:slug/edit' element={<Edit />} />
           </Route>
           <Route element={<RequireAuth allowedRoles={["subscriber", "editor", "administrator"]}/>}>
             <Route path='/profil' element={<Profil />} />

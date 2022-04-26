@@ -11,13 +11,13 @@ const Publish = () => {
     const { auth } = useAuth();
     const [courseTitle, setCourseTitle] = useState('');
     const [courseDuration, setCourseDuration] = useState('');
-    const [courseImagePresentation, setCourseImagePresentation] = useState('');
     const [courseContent, setCourseContent] = useState('');
+    const [courseID, setCourseID] = useState('');
   
 
     const handleSubmit = (event) => {
       event.preventDefault()
-      const response = axiosPrivate.post('wp/v2/posts',
+      const response = axiosPrivate.post(`wp/v2/posts/${courseID}`,
       {
           title: courseTitle,
           acf: {
@@ -32,10 +32,23 @@ const Publish = () => {
     };
 
 
-    // const handleFileInput = (event) => {
-    //   console.log(event);
-    // };
 
+  useEffect(() => {
+    const getCourse = async () => {
+      try {
+        const getData = await axiosPrivate.get(`wp/v2/posts/?slug=${window.location.pathname.slice(1).replace('/edit', '')}`);
+        console.log(getData);
+        setCourseTitle(getData.data[0].title.rendered);
+        setCourseDuration(getData.data[0].acf.course_duration);
+        setCourseContent(getData.data[0].content.rendered);
+        setCourseID(getData.data[0].id);
+        
+      } catch(err) {
+        console.error(err);
+      }
+    }
+    getCourse();
+  }, []);
 
 
     return  (<>
