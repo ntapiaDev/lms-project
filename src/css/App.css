@@ -296,6 +296,12 @@ figure{
   margin-top: 25px;
 }
 
+
+.liste-cours ul {
+  display: flex;
+  flex-direction: column;
+}
+
 .liste-cours li {
   list-style: none;
   padding: 0;
@@ -316,7 +322,6 @@ figure{
   border-radius: 25px;
   width: 100%;
 }
-
 
 @media screen and (min-width : 768px) {
   

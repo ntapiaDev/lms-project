@@ -30,7 +30,8 @@ const Profil = () => {
   const [matchPassword, setMatchPassword ] = useState('');
   const [validMatch, setValidMatch] = useState(false);
 
-  const [classes, setClasses] = useState('');
+  const [classesName, setClassesName] = useState('');
+  const [classesLink, setClassesLink] = useState('');
 
   const [errMsg, setErrMsg] = useState('');
   const [succMsg, setSuccMsg] = useState('');
@@ -77,13 +78,17 @@ const Profil = () => {
         setUserFirstname(getData.data.first_name);
         setUserLastname(getData.data.last_name);
         setUserDisplayname(getData.data.nickname);
-        setClasses(getData.data.acf.followed_class.split(','));
-        console.log('cours suivi : ', classes);
 
         // Récupération des infos de cours
-        for (let i = 0; i < classes.length; i++) {
-          const getClasses = await axiosPrivate.get(`wp/v2/post/${getClasses[i]}`);
+        let classesNames = [];
+        let classesLinks = [];
+        for (let i = 0; i < getData.data.acf.followed_class.split(',').length; i++) {
+          const getClasses = await axios.get(`wp/v2/posts/${getData.data.acf.followed_class.split(',')[i]}`);
+          classesNames.push(getClasses.data.title.rendered);
+          classesLinks.push(getClasses.data.link);
         }
+        setClassesName(classesNames);
+        setClassesLink(classesLinks);
 
         if (getData.data.roles[0] === 'subscriber') {
           setUserRole('Élève')
@@ -304,10 +309,10 @@ const Profil = () => {
 
       <section className="liste-cours">
         <h4>Liste des cours suivis :</h4>
-        {classes?.length
+        {classesName?.length
           ? (
               <ul>
-                  {classes.map((clas, i) => <li key={i}><strong>{classes[i]}</strong></li>)}
+                  {classesName.map((clas, i) => <li key={i}><a href={classesLink[i]}>{classesName[i]}</a></li>)}
               </ul>
           ) : <p>Aucun cours à afficher</p>
         }
