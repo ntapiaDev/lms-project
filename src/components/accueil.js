@@ -6,6 +6,7 @@ import Cours from "./cours";
 function Accueil() {
 
     const { auth } = useAuth();
+    console.log('auth ==> ',auth);
 
         return (
             <div>
