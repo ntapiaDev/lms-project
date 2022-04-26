@@ -46,7 +46,7 @@ const Login = () => {
             let id = '';
             let roles = '';
             for (let i = 0; i < responseUser.data.length; i++) {
-                if (responseUser.data[i].username.toLowerCase() === user.toLowerCase()) {
+                if (responseUser.data[i].username.toLowerCase() === user.toLowerCase().replace(" ","")) {
                     id = responseUser.data[i].id
                     roles = [responseUser.data[i].roles[0]]
                 }
