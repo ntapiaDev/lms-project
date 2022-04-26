@@ -6,23 +6,25 @@ import UsersClass from "./UsersClass";
 
 const Users = () => {
     const [ users, setUsers ] = useState();
+    const [ userDeleted, setUserDeleted] = useState(0);
 
     useEffect(() => {
         const getUsers = async () => {
             try {
                 const response = await axiosPrivate.get('wp/v2/users?context=edit');
                 setUsers(response.data);
-                console.log();
+                console.log('refresh');
 
             } catch(err) {
                 console.error(err);
             }
         }
         getUsers();
-    }, [users]);
+    }, [userDeleted]);
 
-    const deleteUser = (id, i) => {
-        axiosPrivate.delete(`wp/v2/users/${id}?reassign=1&force=true`);
+    const deleteUser = async (id) => {
+        await axiosPrivate.delete(`wp/v2/users/${id}?reassign=1&force=true`);
+        setUserDeleted(userDeleted + 1);
     }
 
     return (
@@ -35,7 +37,7 @@ const Users = () => {
                             {user.roles[0] === 'subscriber' ? <span style={{color: "blue"}}> Élève </span> : ''}
                             {user.roles[0] === 'editor' ? <span style={{color: "green"}}> Professeur </span> : ''}
                             {user.roles[0] === 'administrator' ? <span style={{color: "red"}}> Administrateur </span> : ''}
-                        <FontAwesomeIcon icon={faTimes} className="invalid pointer" onClick={() => deleteUser(user?.id, i)} /><br />
+                        <FontAwesomeIcon icon={faTimes} className="invalid pointer" onClick={() => deleteUser(user?.id)} /><br />
                         <p>Cours suivis :</p>
                         {user.acf.followed_class !== '' ? <UsersClass followed_class={user.acf.followed_class}/> : 'Aucun cours suivi actuellement'}
                         </li>)}

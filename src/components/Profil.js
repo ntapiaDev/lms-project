@@ -31,8 +31,10 @@ const Profil = () => {
   const [matchPassword, setMatchPassword ] = useState('');
   const [validMatch, setValidMatch] = useState(false);
 
+  const [classesList, setClassesList]= useState('');
   const [classesName, setClassesName] = useState('');
   const [classesLink, setClassesLink] = useState('');
+  const [removedClass, setRemovedClass]= useState('');
 
   const [errMsg, setErrMsg] = useState('');
   const [succMsg, setSuccMsg] = useState('');
@@ -78,17 +80,23 @@ const Profil = () => {
         setUserFirstname(getData.data.first_name);
         setUserLastname(getData.data.last_name);
         setUserDisplayname(getData.data.nickname);
+        let classesList = getData.data.acf.followed_class.split(',');
+        setClassesList(classesList);
 
         // Récupération des infos de cours
         let classesNames = [];
         let classesLinks = [];
-        for (let i = 0; i < getData.data.acf.followed_class.split(',').length; i++) {
-          const getClasses = await axios.get(`wp/v2/posts/${getData.data.acf.followed_class.split(',')[i]}`);
-          classesNames.push(getClasses.data.title.rendered);
-          classesLinks.push(getClasses.data.link);
-        }
-        setClassesName(classesNames);
-        setClassesLink(classesLinks);
+        try {
+          for (let i = 0; i < getData.data.acf.followed_class.split(',').length; i++) {
+            const getClasses = await axios.get(`wp/v2/posts/${getData.data.acf.followed_class.split(',')[i]}`);
+            classesNames.push(getClasses.data.title.rendered);
+            classesLinks.push(getClasses.data.link);
+          }
+          setClassesName(classesNames);
+          setClassesLink(classesLinks);
+        } catch (err) {
+          console.log(err);
+        }        
 
         if (getData.data.roles[0] === 'subscriber') {
           setUserRole('Élève')
@@ -106,7 +114,7 @@ const Profil = () => {
       }
     }
     getProfil();
-  }, [auth.id]);
+  }, [auth.id, removedClass]);
 
   const handleInfoSubmit = async (e) => {
     e.preventDefault();
@@ -308,7 +316,7 @@ const Profil = () => {
         </form>
       </section>
 
-      <ProfilClass className={classesName} classLink={classesLink} />
+      <ProfilClass className={classesName} classLink={classesLink} classList={classesList} setRemovedClass={setRemovedClass}/>
     
     </section>
   )
