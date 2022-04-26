@@ -8,6 +8,7 @@ import {
   Link
 } from "react-router-dom";
 
+import ProfilClass from "./ProfilClass";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{2,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -35,8 +36,10 @@ const Profil = () => {
   const [matchPassword, setMatchPassword ] = useState('');
   const [validMatch, setValidMatch] = useState(false);
 
+  const [classesList, setClassesList]= useState('');
   const [classesName, setClassesName] = useState('');
   const [classesLink, setClassesLink] = useState('');
+  const [removedClass, setRemovedClass]= useState('');
 
   const [errMsg, setErrMsg] = useState('');
   const [succMsg, setSuccMsg] = useState('');
@@ -82,6 +85,8 @@ const Profil = () => {
         setUserFirstname(getData.data.first_name);
         setUserLastname(getData.data.last_name);
         setUserDisplayname(getData.data.nickname);
+        let classesList = getData.data.acf.followed_class.split(',');
+        setClassesList(classesList);
 
         // Récupération des infos de cours
         let classesNames = [];
@@ -114,7 +119,7 @@ const Profil = () => {
       }
     }
     getProfil();
-  }, [auth.id]);
+  }, [auth.id, removedClass]);
 
   const handleInfoSubmit = async (e) => {
     e.preventDefault();
@@ -166,6 +171,7 @@ const Profil = () => {
                 'Content-Type': 'application/json'
             }
         });
+        console.log(checkPwd);
       // Mise à jour du nouveau mot de passe :
       const response = await axiosPrivate.post(`wp/v2/users/${auth.id}`,
         {
@@ -315,18 +321,9 @@ const Profil = () => {
         </form>
       </section>
 
-      <section className="liste-cours">
-        <h4>Liste des cours suivis :</h4>
-        {classesName?.length
-          ? (
-              <ul>
-                  {classesName.map((clas, i) => <li key={i}><a href={classesLink[i]}>{classesName[i]}</a></li>)}
-              </ul>
-          ) : <p>Aucun cours à afficher</p>
-        }
-      </section>
-
       <MesCours />
+      <ProfilClass className={classesName} classLink={classesLink} classList={classesList} setRemovedClass={setRemovedClass}/>
+    
     </section>
   )
 }

@@ -3,7 +3,6 @@ import axios from "../api/axios";
 
 const UsersClass = ({followed_class}) => {
 
-
   const [ className, setClassName ] = useState();
   const [ classLink, setClassLink ] = useState();
 
@@ -28,13 +27,12 @@ const UsersClass = ({followed_class}) => {
       setClassLink(classLinkList);
     }
     getClasses();
-  }, []);
+  }, [classes.length, followed_class]);
 
   return (
     <ul>
-      {className?.map((Name, i ) => <li key={i}><a href={classLink[i]}></a>{Name}</li>)}
+      {className?.map((Name, i ) => <li key={i}><a href={classLink[i]}>{Name}</a></li>)}
     </ul>
-    
   )
 }
 
