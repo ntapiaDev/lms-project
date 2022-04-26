@@ -2,10 +2,9 @@ import { useState, useEffect, useRef } from "react";
 import { axiosPrivate } from "../api/axios";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import UsersClasses from "./UsersClasses";
+import UsersClass from "./UsersClass";
 
 const Users = () => {
-    console.log('users page');
     const [ users, setUsers ] = useState();
     const listRef = useRef(); 
 
@@ -40,7 +39,7 @@ const Users = () => {
                             {user.roles[0] === 'administrator' ? <span style={{color: "red"}}> Administrateur </span> : ''}
                         <FontAwesomeIcon icon={faTimes} className="invalid pointer" onClick={() => deleteUser(user?.id, i)} /><br />
                         <p>Cours suivis :</p>
-                        <UsersClasses followed_class={user.acf.followed_class}/>
+                        <UsersClass followed_class={user.acf.followed_class}/>
                         </li>)}
                     </ul>
                 ) : <p>Aucun utilisateur à afficher</p>
