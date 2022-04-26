@@ -3,6 +3,11 @@ import axios, { axiosPrivate } from "../api/axios";
 import useAuth from "../hooks/useAuth";
 import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import parse from 'html-react-parser';
+import {
+  Link
+} from "react-router-dom";
+
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{2,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -37,7 +42,6 @@ const Profil = () => {
   const [succMsg, setSuccMsg] = useState('');
 
   const { auth } = useAuth();
-  console.log('coucou');
 
   useEffect(() => {
     const result = USER_REGEX.test(userFirstname);
@@ -82,13 +86,17 @@ const Profil = () => {
         // Récupération des infos de cours
         let classesNames = [];
         let classesLinks = [];
-        for (let i = 0; i < getData.data.acf.followed_class.split(',').length; i++) {
-          const getClasses = await axios.get(`wp/v2/posts/${getData.data.acf.followed_class.split(',')[i]}`);
-          classesNames.push(getClasses.data.title.rendered);
-          classesLinks.push(getClasses.data.link);
+        try {
+          for (let i = 0; i < getData.data.acf.followed_class.split(',').length; i++) {
+            const getClasses = await axios.get(`wp/v2/posts/${getData.data.acf.followed_class.split(',')[i]}`);
+            classesNames.push(getClasses.data.title.rendered);
+            classesLinks.push(getClasses.data.link);
+          }
+          setClassesName(classesNames);
+          setClassesLink(classesLinks);
+        } catch (err) {
+          console.log(err);
         }
-        setClassesName(classesNames);
-        setClassesLink(classesLinks);
 
         if (getData.data.roles[0] === 'subscriber') {
           setUserRole('Élève')
@@ -317,8 +325,87 @@ const Profil = () => {
           ) : <p>Aucun cours à afficher</p>
         }
       </section>
+
+      <MesCours />
     </section>
   )
 }
+
+
+
+const MesCours = () => {
+
+  const { auth } = useAuth();
+  const [CourseListInstructor, setCourseListInstructor] = useState('');
+  const [CourseListInstructorLink, setCourseListInstructorLink] = useState('');
+  const [CourseEditLink, setCourseEditLink] = useState('');
+
+  // useEffect(() => {
+  //   const result = PWD_REGEX.test(oldPassword);
+  //   setValidOldPwd(result);
+  // }, [oldPassword])
+
+  useEffect(() => {
+    const getCourses = async () => {
+      try {
+        const getCourseInstructor = await axiosPrivate.get(`wp/v2/posts/?author=${auth.id}`);
+        // Récupération des infos de cours
+        let CourseListInstructor = [];
+        let CourseListInstructorLink = [];
+        let CourseEditLink = [];
+        for (let i = 0; i < getCourseInstructor.data.length; i++) {
+          CourseListInstructor.push(getCourseInstructor.data[i].title.rendered);
+          CourseListInstructorLink.push(getCourseInstructor.data[i].link);
+          CourseEditLink.push(`../${getCourseInstructor.data[i].slug}/edit`);
+        }
+        console.log(CourseEditLink);
+        setCourseListInstructor(CourseListInstructor);
+        setCourseListInstructorLink(CourseListInstructorLink);
+        setCourseEditLink(CourseEditLink);
+
+      } catch(err) {
+        console.error(err);
+      }
+    }
+    getCourses();
+  }, [auth.id]);
+
+
+  return(
+    
+      <>
+      {auth.roles[0] === 'editor' || auth.roles[0] === 'administrator' ?
+        <>
+          <section className="liste-cours-instructor">
+            <h4>Mes cours créés</h4>
+            {CourseListInstructor?.length
+              ? (
+                  <ul>
+                      {CourseListInstructor.map((clas, i) => 
+                      <li key={i}>
+                        <a href={CourseListInstructorLink[i]}>{parse(CourseListInstructor[i])}</a>
+                        <div className="button-list">
+                          <Link to={CourseEditLink[i]} ><button >Editer</button></Link>
+                          <button>Supprimer</button>
+                        </div>
+                      </li>
+                      )}
+
+                  </ul>
+              ) : <p>Aucun cours à afficher</p>
+            }
+            <Link to="/publier" ><button className="form-btn" >Ajouter un cours</button></Link>
+          </section>
+        </>
+        : 
+        '' }
+
+      </>
+
+  )
+
+
+}
+
 
 export default Profil;

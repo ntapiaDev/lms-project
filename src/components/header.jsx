@@ -51,9 +51,6 @@ export default function Header() {
                 <li>
                   <Link to="/utilisateurs">Liste des membres</Link>
                 </li>
-                <li>
-                  <Link to="/publier">Nouveau cours</Link>
-                </li>
                 </>
               : '' }
             <>
@@ -91,9 +88,6 @@ export default function Header() {
                   <>
                     <li>
                       <Link to="/utilisateurs" onClick={() => closeMenu()}>Liste des membres</Link>
-                    </li>
-                    <li>
-                      <Link to="/publier" onClick={() => closeMenu()}>Nouveau cours</Link>
                     </li>
                     </>
                   : '' }

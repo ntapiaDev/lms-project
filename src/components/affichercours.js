@@ -13,8 +13,8 @@ export default class AfficherCours extends React.Component {
     
     componentDidMount() {
         let slug = window.location.pathname.slice(1)
-        // fetch(`http://decouvertewordpress/wp-json/wp/v2/posts/?slug=${slug}`)
-        fetch(`https://projet-lms-afpa.000webhostapp.com/wp-json/wp/v2/cours/?slug=${slug}`)
+        fetch(`http://decouvertewordpress/wp-json/wp/v2/posts/?slug=${slug}`)
+        // fetch(`https://projet-lms-afpa.000webhostapp.com/wp-json/wp/v2/cours/?slug=${slug}`)
             .then(response => response.json())
             .then(data => this.setState({ coursListe: data, isLoaded : true }));
         
@@ -23,17 +23,16 @@ export default class AfficherCours extends React.Component {
     render() {
         const {isLoaded, coursListe} = this.state;
         if(!isLoaded){
-            return  <div class="loading">
+            return  <div className="loading">
                 <p>Chargement…</p>
             </div>;
         }
         else if (isLoaded){
-            console.log(coursListe[0]);
             let titlecours = coursListe[0].title.rendered
             let cours = coursListe[0].content.rendered
             return (
                 
-                <div class="cours-content">
+                <div className="cours-content">
                     <h1>{ parse(titlecours) }</h1>
                     { parse(cours) }
                 </div>
