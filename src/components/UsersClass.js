@@ -12,6 +12,7 @@ const UsersClass = ({followed_class}) => {
   useEffect(() => {
     let classNameList = [];
     let classLinkList = [];
+    console.log(classes);
 
     const getClasses = async () => {
       for (let i = 0; i < classes.length; i++) {

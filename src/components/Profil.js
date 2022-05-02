@@ -4,17 +4,18 @@ import useAuth from "../hooks/useAuth";
 import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import parse from 'html-react-parser';
-import {
-  Link
-} from "react-router-dom";
-
+import { Link } from "react-router-dom";
 import ProfilClass from "./ProfilClass";
+import UploadAvatar from "./UploadAvatar";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{2,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const EMAIL_REGEX = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
 const Profil = () => {
+  const [avatar, setAvatar] = useState('');
+  const [urlAvatar, setUrlAvatar] = useState('');
+
   const [userFirstname, setUserFirstname ] = useState('');
   const [validFirstname, setValidFirstname ] = useState(false);
 
@@ -82,6 +83,7 @@ const Profil = () => {
     const getProfil = async () => {
       try {
         const getData = await axiosPrivate.get(`wp/v2/users/${auth.id}?context=edit`);
+        setAvatar(getData.data.acf.avatar_url);
         setUserFirstname(getData.data.first_name);
         setUserLastname(getData.data.last_name);
         setUserDisplayname(getData.data.nickname);
@@ -119,7 +121,7 @@ const Profil = () => {
       }
     }
     getProfil();
-  }, [auth.id, removedClass]);
+  }, [auth.id, removedClass, urlAvatar]);
 
   const handleInfoSubmit = async (e) => {
     e.preventDefault();
@@ -195,6 +197,9 @@ const Profil = () => {
       <h2>Page de profil</h2>
 
       <section className="infos">
+
+        <UploadAvatar id={auth.id} url={avatar} setUrl={setUrlAvatar} />
+
         <h4>Informations personnelles :</h4>
         <p className={errMsg? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
         <p className={succMsg? "succmsg" : "offscreen"} aria-live="assertive">{succMsg}</p>
