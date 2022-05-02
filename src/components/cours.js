@@ -71,8 +71,8 @@ class Cours extends React.Component {
     }
 
     componentDidMount() {
-        fetch('http://decouvertewordpress/wp-json/wp/v2/posts')
-        // fetch('https://projet-lms-afpa.000webhostapp.com/wp-json/wp/v2/cours')
+        // fetch('http://decouvertewordpress/wp-json/wp/v2/posts')
+        fetch('https://projet-lms-afpa.000webhostapp.com/wp-json/wp/v2/cours')
             .then(response => response.json())
             .then(data => this.setState({ coursListe: data, isLoaded : true }));
         
