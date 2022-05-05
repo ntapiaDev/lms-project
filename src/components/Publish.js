@@ -1,7 +1,9 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { axiosPrivate } from "../api/axios";
 import useAuth from "../hooks/useAuth";
+import { Editor } from '@tinymce/tinymce-react';
+
 
 
 
@@ -31,7 +33,12 @@ const Publish = () => {
       console.log(response);
     };
 
-
+    const editorRef = useRef(null);
+    const log = () => {
+      if (editorRef.current) {
+        console.log(editorRef.current.getContent());
+      }
+    };
     // const handleFileInput = (event) => {
     //   console.log(event);
     // };
@@ -78,13 +85,34 @@ const Publish = () => {
                   htmlFor="content">
                     Contenu
                 </label>
-                <textarea
+                {/* <textarea
                   name="courseContent"
                   value={courseContent}
                   onChange={(e) => setCourseContent(e.target.value)} 
                   id="content"
                   rows="20"
-                  required>{courseContent}</textarea>
+                  required>{courseContent}</textarea> */}
+
+                      <Editor
+                        onInit={(evt, editor) => editorRef.current = editor}
+                        initialValue="<p>This is the initial content of the editor.</p>"
+                        init={{
+                          height: 500,
+                          menubar: false,
+                          plugins: [
+                            'advlist', 'autolink', 'lists', 'link', 'image', 'charmap',
+                            'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                            'insertdatetime', 'media', 'table', 'preview', 'help', 'wordcount'
+                          ],
+                          toolbar: 'undo redo | blocks | ' +
+                            'bold italic forecolor | alignleft aligncenter ' +
+                            'alignright alignjustify | bullist numlist outdent indent | ' +
+                            'removeformat | help',
+                          content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+                        }}
+                      />
+                      <button onClick={log}>Log editor content</button>
+
                 <button className="form-btn" >Valider</button>
             </form>
             </>) 
